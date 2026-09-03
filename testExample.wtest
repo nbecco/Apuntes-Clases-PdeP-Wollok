@@ -1,0 +1,14 @@
+import futbol.*
+
+describe "Se testea el comportamiento de quienGanaEntre()" {
+    test "El equipo ganador es aquel que mete mas goles" {
+        assert.equals (barracas, referee.quienGanaEntre(barracas, river))
+    }
+}
+
+describe "Se testea el comportamiento de Barracas" {
+    test "Siempre mete un gol mas que el rival" {
+        const golesQueLeMeten = river.goles(barracas)
+        assert.equals (golesQueLeMeten + 1, barracas.goles(river))
+    }
+}

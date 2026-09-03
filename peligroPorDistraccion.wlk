@@ -1,3 +1,5 @@
+// PRIMERA CLASE (20/08)
+
 object homero {
   var donas = 0
 
@@ -34,25 +36,22 @@ object plantaNuclear {
 
   // Chequea las barras y le pregunta al encargado si está distraído
   method estaEnPeligro() {
-    return barrasUranio > 10000 and encargado.estaDistraido() 
+    return barrasUranio > 10000 && encargado.estaDistraido() 
   }
 
   // Este es del punto de Mr Burns, pero en realidad se deberia modificar el method estaEnPeligro y quedaria solo este
   method estaEnPeligro2() {
-    const peligroPorDistraccion = barrasUranio > 10000 and encargado.estaDistraido()
+    const peligroPorDistraccion = barrasUranio > 10000 && encargado.estaDistraido()
     
-    return peligroPorDistraccion or mrBurns.esPobre()
+    return peligroPorDistraccion || mrBurns.esPobre()
   }
 
 }
 
 
 object patoBalacin {
-  method estaDistraido() {
-    return false // Nunca se distrae
-  }
+  method estaDistraido() = false // Nunca se distrae
 }
-
 
 object lenny {
   var cervezasTomadas = 0
