@@ -7,12 +7,15 @@
 // - interfaz = es todo lo que tiene que entender un objeto para ser reconocido como tal (por ejemplo un equipo es reconocido como un equipo si tiene goles, hinchada, dinero y capacidadOfensiva, si le agregamos otra cosa no deja de ser un equipo, pero si le sacamos una de esas cosas deja de ser un equipo, ya que todos estos parametros/argumentos son utilizados entre si para calcular quien gana)
 // - polimorfismo = para que un objeto sea polimorfo a otros debe cumplir con su interfaz, es decir, debe tener los mismos métodos que los otros objetos. Por ejemplo, si un objeto tiene goles, hinchada, dinero y capacidadOfensiva, es polimorfo a los equipos. Si le agregamos otra cosa no deja de ser polimorfo, pero si le sacamos una de esas cosas deja de ser polimorfo. El polimorfismo es importante porque nos permite hacer que un objeto pueda ser utilizado en lugar de otro (por ejemplo, podemos hacer que un objeto sea utilizado en lugar de un equipo si cumple con la interfaz de equipo). Esto nos permite hacer que nuestro código sea más flexible y reutilizable.
 
+
+
+// RIVER
 object river {
     var dineroEnCaja = 1000000
     const cantidadDeSocios = 100
-    method goles(rival) = (self.dinero() - rival.dinero()).div(1000000)
+    method goles(rival) = ((self.dinero() - rival.dinero()) / 1000000).roundUp()
 
-    method dinero() = ((dineroEnCaja + cantidadDeSocios) * 13000)
+    method dinero() = (dineroEnCaja + (cantidadDeSocios * 13000))
 
     // LO PENSAMOS ASI Y LOS PROFES NOS DIJERON QUE NO ES LO CORRECTO
     // method concierto(cantante) {
@@ -26,73 +29,94 @@ object river {
         dineroEnCaja += concierto.recaudacion()
     }
 
-    method cantidadDeHinchas() = 10000 + cantidadDeSocios * 2
+    method hinchas() = 10000 + cantidadDeSocios * 2
 
     method capacidadOfensiva() = self.dinero().div(1000000)
 }
-
-object lali {
-    method recaudacion() = 5000000
-}
-
-object mana {
-    method recaudacion() = 3500000
-}
-
-object karolG {
-    method recaudacion() = lali.recaudacion() // Karol G recauda lo mismo que Lali
-}
+// CONCIERTOS DE RIVER
+object lali { method recaudacion() = 5000000 }
+object mana { method recaudacion() = 3500000 }
+object karolG { method recaudacion() = lali.recaudacion() } // Karol G recauda lo mismo que Lali
 
 
 
+// BARRACAS
 object barracas {
-    method hinchada() = 800
+    method hinchas() = 800
     method dinero() = 1000000
     method capacidadOfensiva() = 5
     method goles(rival) = rival.goles(self) + 1
 }
 
 
-// FALTA TERMINAR EL OBJETO DE BOCA
+
+// BOCA
 object boca {
-    var golesMarcados = 1
-    method goles(rival) = 1 + ( self.capacidadOfensiva()- rival.capacidadOfensiva() / 3)
+    var ingresos = []
+    var deudas = []
+    
+    method goles(rival) = 1 + (self.capacidadOfensiva() - rival.capacidadOfensiva()).div(3)
     method hinchas() = 54000
 
-    method dinero() = self.ingresos(jugador) - self.deudas()
+    method dinero() = self.sumatoriaDeIngresos() - self.sumatoriaDeDeudas()
 
-    method ingresos(jugador) {
-        return jugador.valor()
+    method sumatoriaDeIngresos() = ingresos.sum() 
+    method sumatoriaDeDeudas() = deudas.sum()
+    
+    method vender(jugador) {
+        ingresos.add(jugador.valor())
     }
 
-    method deudas() {
-        return 1000000
+    method agregarDeuda(monto) {
+        deudas.add(monto)
     }
 
+    method estaEnMalMomento() = deudas.size() > (ingresos.size() * 2)
+    
     method capacidadOfensiva() {
-        if(self.deudas() > self.ingresos(jugador) *2 ) {
+        if(self.estaEnMalMomento()) {
             return 25
         } else {
             return 40
         }
     }
 }
-
-object cachoPanceta {
-    method valor() = 1000000
-}
-object francoFranco {
-    method valor() = 2000000
-}
+// JUGADORES DE BOCA
+object cachoPanceta { method valor() = 1000000 }
+object francoFranco { method valor() = 2000000 }
 
 
-// FALTA HACER EL OBJETO DE VELEZ
+
+// VELEZ
 object velez {
+    var jugadorFigura = perroGutierrez
 
+    method goles(rival){
+        if( self.capacidadOfensiva() > rival.capacidadOfensiva() ){
+            return 3
+        } else {
+            return 1
+        }
+    }
+    method dinero() = jugadorFigura.valor()
+
+    method capacidadOfensiva() = jugadorFigura.habilidad() * 4
+
+    method hinchas() = jugadorFigura.habilidad() * 2000
+
+    method cambioDeJugadorFigura(jugador) {
+        jugadorFigura = jugador
+    }
+}
+// JUGADOR FIGURA DE VELEZ
+object perroGutierrez {
+    method valor() = 1000000
+    method habilidad() = 100
 }
 
 
-// FALTA TERMINAR EL REFEREE (LO DE PENALES Y NO SE SI ALGO MAS)
+
+// REFEREE
 object referee {
     method quienGanaEntre(equipo1, equipo2) {
         if (equipo1.goles(equipo2) > equipo2.goles(equipo1)) {
@@ -100,7 +124,7 @@ object referee {
         } else if (equipo2.goles(equipo1) > equipo1.goles(equipo2)) {
             return equipo2
         } else {
-            return null // Empate
+            return randomizer.anyOne([equipo1, equipo2]) // Empate
         }
     }
 }
