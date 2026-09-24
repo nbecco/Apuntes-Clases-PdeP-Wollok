@@ -108,7 +108,7 @@ object sofia {
 
     method velocidad() = 1
 
-    method puedeAtraparlo(unQuilombero) = unQuilombero == nicolas
+    //method puedeAtraparlo(unQuilombero) = unQuilombero == nicolas
 
     method dormir() {
         energia += 9000
@@ -132,3 +132,8 @@ object nicolas {
 
     method velocidad() = peso * 10
 }
+
+
+// FALTA PUNTO TEORICO POR MI CUENTA
+
+// FALTA TESTS POR MI CUENTA
