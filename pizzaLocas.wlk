@@ -1,5 +1,13 @@
-// CLASE 24/09 - Tema: Clases
+// CLASE 24/09 y 01/10 - Tema: Clases, Excepciones, Garbage Collector, Well-Known Objects
 
+// Excepciones: se utilian para CORTAR la ejecucion del codigo y avisar cuando ocurre un caso especifica, similiar al try catchAllErrors
+// Ejemplos: else throw new DomainException(message='...') 
+
+// Garbage Collector: se encarga de borrar todos los objetos que no estemos utilizando de la memoria, 
+// ya que wollok guarda las cosas que fuimos creando en memoria y cuando las borramos del codigo todavia 
+// no se borran de la memoria (creo que es lo que nos pasaba en wollok game)
+
+// Well-Known Objects (WKO): son los objetos que se crean en el codigo (object ...{}), no los que se crean luego de poner new de una clase
 
 
 // En este caso no es necesario hacer clases porque no hay una repeticion de logica entre las pizzas,
@@ -39,11 +47,21 @@ class Usuario {
         pizzasFavoritas.add(nuevaPizza)
     }
 
+    method pizzasFavoritas() =pizzasFavoritas
+
     method leGusta(tipoDePizza) = pizzasFavoritas.contains(tipoDePizza)
 
     method comprar(tipoDePizza) {
-        crazyPizzaPoints += tipoDePizza.costo() / 100
-    }
+        if( sistemaDeUsuario.estaRegistrado(self) ){
+            crazyPizzaPoints += tipoDePizza.costo() / 100
+            pizzeria.ejecutarVenta(tipoDePizza)
+        }
+        else {
+        throw new DomainException(message='El usuario no esta registrado')
+        }
+    }   
+
+    method points() = crazyPizzaPoints
 
     method sumarPuntos(cantidad) {
         crazyPizzaPoints += cantidad
@@ -58,13 +76,15 @@ class Usuario {
         const nuevoPremio = new Premio(usuario = self, año = añoActual)
         premios.add(nuevoPremio)
     }
+
+    method premios() = premios
 }
 
 class Premio {
     const usuario
     const año 
 
-    method textoConmemorativo() = usuario.nombre() + " gano el premio en el año " + año
+    method textoConmemorativo() = usuario.nombre() + " gano el premio pizza loca en el año " + año
     method esViejo() = año < 2020
 
 }
@@ -75,6 +95,12 @@ object sistemaDeUsuario {
     method registrar(nombre) {
         const nuevoUsuario = new Usuario(nombre = nombre)
         usuariosRegistrados.add(nuevoUsuario)
+    }
+
+    method estaRegistrado() = 
+
+    method agregarUsuarioYaExisitente() {
+
     }
 
     method aCuantosLesGusta(tipoDePizza) = 
@@ -92,5 +118,17 @@ object sistemaDeUsuario {
     }
 }
 
+object pizzeria {
+    var ganacia = 0
 
-// QUEDA TERMINAR EL ULTIMO PUNTO Y REHACER POR MI CUENTA
+    method ganacias() = ganacia
+
+    method ejecutarVenta(pizza){
+        ganacia += pizza.precio()
+    }
+}
+
+
+//QUE COSAS ME FALTAN:
+// agregarUsuarioYaExisitente en object sistemaDeUsuario
+// estaRegistrado en object sistemaDeUsuario y en el method comprar del object usuario
