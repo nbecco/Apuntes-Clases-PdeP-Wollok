@@ -1,10 +1,10 @@
 object simulador {
     method ganadorDelPartido(local, visitante) {
         if( local.goles(visitante) > visitante.goles(local) ){
-            return local
+            local
         } 
         else if( visitante.goles(local) > local.goles(visitante) ){
-            return visitante
+            visitante
         }
         else{
             [local, visitante].anyOne()
@@ -38,7 +38,7 @@ object boca {
     const ingresos = []
     const deudas = []
 
-    method goles(rival) = 1 + (self.capacidadOfensiva() - rival.capacidadOfensiva() / 3).roundDown()
+    method goles(rival) = 1 + ( (self.capacidadOfensiva() - rival.capacidadOfensiva()) / 3 ).roundDown()
 
     method dinero() = ingresos.sum() - deudas.sum()
 
@@ -95,7 +95,7 @@ object ejemploJugadorDeVelez {
 
 
 object barracas {
-    method goles(rival) = rival.goles() + 1
+    method goles(rival) = rival.goles(self) + 1
 
     method cantidadHinchas() = 800
 
