@@ -133,7 +133,25 @@ object nicolas {
     method velocidad() = peso * 10
 }
 
+/* 
 
-// FALTA PUNTO TEORICO POR MI CUENTA
+¿Cuáles son las interfaces que hay en la solución?
+Interfaz Cuidador: Son los objetos asignados a la propiedad cuidador de la casa y que interactúan con ella o sufren las acciones de los quilomberos.  
+    - Mensajes que debe entender: limpiar(casa), puedeAtraparlo(unQuilombero), dormir(), interrumpirSueño().
+    - Objetos que la implementan: tom, robocat, sofia.
+
+Interfaz Quilombero: Son los objetos que se asignan a la propiedad quilombero de la casa o que forman parte de una pandilla.   
+    - Mensajes que debe entender: hacerQuilombo(casa), velocidad().
+    - Objetos que la implementan: jerry, tuffy, pandilla, nicolas.
+
+Interfaz Casa: Es el objeto que recibe las acciones de limpieza y de hacer quilombo, por lo que es enviado como parámetro a los métodos de cuidadores y quilomberos.   
+PDF
+    - Mensajes que debe entender: limpiar(nuevaSuciedad), ensuciar(nuevaSuciedad), limpiarCompletamente(), cuidador().
+    - Objetos que la implementan: casa.
+
+*/
+
+
+
 
 // FALTA TESTS POR MI CUENTA

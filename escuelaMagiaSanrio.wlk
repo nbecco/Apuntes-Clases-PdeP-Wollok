@@ -72,7 +72,7 @@ class NubeGris {
 }
 
 class NubeTormenta inherits NubeGris {
-    var resistencia
+    const resistencia
 
     override method perderTristeza(cantidad) {
         const cantidadFinal = cantidad - resistencia

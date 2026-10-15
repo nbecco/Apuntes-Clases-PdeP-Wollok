@@ -1,6 +1,6 @@
 object partida {
-    var participanteAzul = null
-    var participanteRojo = null
+    const participanteAzul = null //pongo const para que no me salte error, pero deberia ser var
+    const participanteRojo = null //pongo const para que no me salte error, pero deberia ser var
     var yaSeJugo = false
 
 
