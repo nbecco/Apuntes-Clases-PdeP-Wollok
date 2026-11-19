@@ -1,0 +1,16 @@
+import grimfandango.*
+
+describe "Estrategia navegante" {
+  const almaCon50 = new Alma(dineroAlMorir = 0, accionesBuenas = 50)
+  const almaCon49 = new Alma(dineroAlMorir = 0, accionesBuenas = 49)
+
+  test "Si el alma tiene 50 acciones buenas le ofrece un crucero con basico 50" {
+    // crucero: reduce (50/50).min(2) * 2 = 2 años, costo 50 * 2 = 100 (un bote costaría 50)
+    assert.equals(100, estrategiaNavegante.paquetePara(almaCon50).costoPara(almaCon50))
+  }
+
+  test "Si el alma tiene menos de 50 acciones buenas le ofrece un bote con basico 49" {
+    // bote: reduce 49/50 = 0.98 años, costo 49 * 0.98 = 48.02 (un crucero costaría 96.04)
+    assert.equals(48.02, estrategiaNavegante.paquetePara(almaCon49).costoPara(almaCon49))
+  }
+}
