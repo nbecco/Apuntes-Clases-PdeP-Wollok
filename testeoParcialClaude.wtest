@@ -1,0 +1,31 @@
+import pasteleria.*
+
+describe "Pasteleria" {
+
+  // A5)
+  test "el precio total de un pedido con un cupcake y una torta con dedicatoria es la suma de sus precios" {
+    const torta = new Torta(porciones = 10)
+    torta.ponerDedicatoria("Feliz cumple")
+    const pedido = new Pedido()
+    pedido.agregar(new Cupcake(gramosCobertura = 20))
+    pedido.agregar(torta)
+
+    assert.equals(20440, pedido.precioTotal())
+  }
+
+  // B2)
+  test "el precio total de un pedido con una caja que contiene otra caja incluye el contenido de las dos" {
+    const merienda = new Caja()
+    merienda.agregar(new Cupcake(gramosCobertura = 20))
+    merienda.agregar(new PaqueteDeGalletitas(cantidad = 12))
+    const granRegalo = new Caja()
+    granRegalo.agregar(merienda)
+    granRegalo.agregar(new TortaSinTacc(porciones = 4))
+    granRegalo.ponerDedicatoria("Te quiero")
+    const pedido = new Pedido()
+    pedido.agregar(granRegalo)
+
+    // 800 + 0.9 * (5570 + 10400) + 680 de dedicatoria
+    assert.equals(15853, pedido.precioTotal())
+  }
+}
